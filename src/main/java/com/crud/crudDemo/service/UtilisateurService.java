@@ -58,11 +58,12 @@ public class UtilisateurService {
         return convertToDto(updatedUtilisateur);
     }
 
-    public void deleteUtilisateur(Long id) {
+    public String deleteUtilisateur(Long id) {
         if (!utilisateurRepository.existsById(id)) {
             throw new EntityNotFoundException("Utilisateur not found with id: " + id);
         }
         utilisateurRepository.deleteById(id);
+        return "user deleted";
     }
 
     private UtilisateurDto convertToDto(Utilisateur utilisateur) {

@@ -40,8 +40,8 @@ public class UtilisateurController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUtilisateur(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUtilisateur(@PathVariable Long id) {
         utilisateurService.deleteUtilisateur(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("user deleted");
     }
 }
