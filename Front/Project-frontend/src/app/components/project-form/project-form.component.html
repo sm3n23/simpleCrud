@@ -1,0 +1,57 @@
+<div class="bg-white rounded-xl shadow-xl max-w-4xl w-full mx-4 transform transition-all">
+    <div class="px-6 py-4 border-b border-gray-200">
+      <h3 class="text-xl font-semibold text-gray-900">
+        {{isEditing ? 'Modifier le projet' : 'Nouveau projet'}}
+      </h3>
+    </div>
+  
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" class="p-6">
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label for="nom" class="block text-sm font-medium text-gray-700 mb-1">Nom du projet</label>
+          <input type="text" id="nom" formControlName="nom"
+                 class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          <p *ngIf="projectForm.get('nom')?.invalid && projectForm.get('nom')?.touched" 
+             class="mt-1 text-sm text-red-600">
+            Le nom est requis
+          </p>
+        </div>
+  
+        <div>
+          <label for="utilisateurId" class="block text-sm font-medium text-gray-700 mb-1">Responsable</label>
+          <select id="utilisateurId" formControlName="utilisateurId"
+                  class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+            <option value="">Sélectionner un responsable</option>
+            <option *ngFor="let user of users" [value]="user.id">
+              {{user.nom}} ({{user.email}})
+            </option>
+          </select>
+          <p *ngIf="projectForm.get('utilisateurId')?.invalid && projectForm.get('utilisateurId')?.touched" 
+             class="mt-1 text-sm text-red-600">
+            Le responsable est requis
+          </p>
+        </div>
+  
+        <div class="col-span-2">
+          <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <textarea id="description" formControlName="description" rows="4"
+                    class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+          <p *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" 
+             class="mt-1 text-sm text-red-600">
+            La description est requise
+          </p>
+        </div>
+      </div>
+  
+      <div class="mt-6 flex justify-end space-x-3">
+        <button type="button" (click)="projectSaved.emit()"
+                class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition duration-200">
+          Annuler
+        </button>
+        <button type="submit" [disabled]="projectForm.invalid"
+                class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+          {{isEditing ? 'Enregistrer' : 'Créer'}}
+        </button>
+      </div>
+    </form>
+  </div>

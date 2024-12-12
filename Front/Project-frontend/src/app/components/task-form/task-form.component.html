@@ -1,0 +1,77 @@
+<div class="bg-white rounded-xl shadow-xl max-w-4xl w-full mx-4 transform transition-all">
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h3 class="text-xl font-semibold text-gray-900">
+      {{isEditing ? 'Modifier la tâche' : 'Nouvelle tâche'}}
+    </h3>
+  </div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="p-6">
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label for="titre" class="block text-sm font-medium text-gray-700 mb-1">Titre</label>
+        <input type="text" id="titre" formControlName="titre"
+               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        <p *ngIf="taskForm.get('titre')?.invalid && taskForm.get('titre')?.touched" 
+           class="mt-1 text-sm text-red-600">
+          Le titre est requis
+        </p>
+      </div>
+
+      <div>
+        <label for="projetId" class="block text-sm font-medium text-gray-700 mb-1">Projet</label>
+        <select id="projetId" formControlName="projetId"
+                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          <option value="">Sélectionner un projet</option>
+          <option *ngFor="let project of projects" [value]="project.id">
+            {{project.nom}}
+          </option>
+        </select>
+        <p *ngIf="taskForm.get('projetId')?.invalid && taskForm.get('projetId')?.touched" 
+           class="mt-1 text-sm text-red-600">
+          Le projet est requis
+        </p>
+      </div>
+
+      <div class="col-span-2">
+        <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+        <textarea id="description" formControlName="description" rows="3"
+                  class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+        <p *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched" 
+           class="mt-1 text-sm text-red-600">
+          La description est requise
+        </p>
+      </div>
+
+      <div>
+        <label for="dateEcheance" class="block text-sm font-medium text-gray-700 mb-1">Date d'échéance</label>
+        <input type="date" id="dateEcheance" formControlName="dateEcheance"
+               class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        <p *ngIf="taskForm.get('dateEcheance')?.invalid && taskForm.get('dateEcheance')?.touched" 
+           class="mt-1 text-sm text-red-600">
+          La date d'échéance est requise
+        </p>
+      </div>
+
+      <div>
+        <label for="statut" class="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+        <select id="statut" formControlName="statut"
+                class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+          <option value="A_FAIRE">À faire</option>
+          <option value="EN_COURS">En cours</option>
+          <option value="TERMINE">Terminé</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mt-6 flex justify-end space-x-3">
+      <button type="button" (click)="taskSaved.emit()"
+              class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition duration-200">
+        Annuler
+      </button>
+      <button type="submit" [disabled]="taskForm.invalid"
+              class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+        {{isEditing ? 'Enregistrer' : 'Créer'}}
+      </button>
+    </div>
+  </form>
+</div>

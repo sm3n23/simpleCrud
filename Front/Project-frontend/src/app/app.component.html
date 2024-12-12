@@ -1,0 +1,40 @@
+<div class="min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg" *ngIf="authService.isLoggedIn()">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between h-16">
+        <div class="flex">
+          <div class="flex-shrink-0 flex items-center">
+            <a routerLink="/" class="text-2xl font-bold text-blue-600">GestionProjets</a>
+          </div>
+          <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+            <a routerLink="/projects" routerLinkActive="border-blue-500 text-blue-600" 
+               class="border-transparent text-gray-700 hover:text-blue-600 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+              Projets
+            </a>
+            <a routerLink="/tasks" routerLinkActive="border-blue-500 text-blue-600"
+               class="border-transparent text-gray-700 hover:text-blue-600 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+              Tâches
+            </a>
+            <a routerLink="/users" routerLinkActive="border-blue-500 text-blue-600"
+               class="border-transparent text-gray-700 hover:text-blue-600 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200">
+              Utilisateurs
+            </a>
+          </div>
+          
+        </div>
+        <button (click)="authService.logout()" 
+          class="text-red-600 hover:text-red-800 px-3 py-2">
+          Déconnexion
+        </button>
+      </div>
+      
+    </div>
+    
+  </nav>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>
